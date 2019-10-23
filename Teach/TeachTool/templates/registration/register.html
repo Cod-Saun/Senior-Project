@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="../static/Foundation/css/foundation.css">
+</head>
+
+<body>
+    <div class="grid-container">
+        <div class="grid-x grid-padding-x grid-padding-y">
+            <div class="cell small-4">
+                <img src="https://i.imgur.com/ZCEyPtc.png" style="width:75px;height:75px;">
+            </div>
+            <div class="cell small-4">
+                <h2>Classroom Helper</h2>
+            </div>
+            <div class="cell small-4">
+                <ul class="menu align-right">
+                    <a href="../" class="button">Home</a>
+                </ul>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x grid-padding-y">
+            <div class="cell large-12">
+                <h2>Register</h2>
+            </div>
+        </div>
+        <div class="grid-x grid-padding-x grid-padding-y">
+            <div class="cell large-6">
+                <select>
+                    <option value="Teacher">Teacher</option>
+                    <option value="Student">Student</option>
+                </select>
+                <form action="/Register/" method="post">
+                    {% csrf_token %}
+                    {{ form.errors }}
+                    {{ form.username.label_tag }}
+                    {{ form.username }}
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    <input type="submit" class="button expanded" value="Register" />
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

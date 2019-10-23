@@ -1,18 +1,42 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
+from django.contrib.auth import logout
+from django.utils.safestring import mark_safe
+from . import forms
+from . import models
+import json
 
 # Create your views here.
-def index(request):
-    return HttpResponse("Hello, World.")
-
 def home(request):
-    return render(request, "home.html")
-
-def login(request):
-    return render(request, "login.html")
+    context = {
+        "loginredirect":""
+    }
+    return render(request, "home.html", context=context)
 
 def register(request):
-    return render(request, "register.html")
+    if request.method == "POST":
+        form_instance = forms.RegistrationForm(request.POST)
+        if form_instance.is_valid():
+            form_instance.save()
+            return redirect("/Login")
+    else:
+        form_instance = forms.RegistrationForm()
+    context = {
+        "form":form_instance,
+    }
+    return render(request, "registration/register.html", context=context)
 
+@login_required(login_url="/Login/")
 def dashboard(request):
     return render(request, "dashboard.html")
+
+@login_required(login_url="/Login/")
+def create_quiz(request):
+    return render(request, "createquiz.html")
+
+def Logout(request):
+    logout(request)
+    return redirect("/")

@@ -3,12 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Register</title>
+    <title>Welcome!</title>
     <link rel="stylesheet" href="../static/Foundation/css/foundation.css">
 </head>
 
 <body>
     <div class="grid-container">
+        <!---grid-x = horizontal row grid-y = vertical row cell = column-->
         <div class="grid-x grid-padding-x grid-padding-y">
             <div class="cell small-4">
                 <img src="https://i.imgur.com/ZCEyPtc.png" style="width:75px;height:75px;">
@@ -17,23 +18,14 @@
                 <h2>Classroom Helper</h2>
             </div>
             <div class="cell small-4">
-                <ul class="menu align-right">
+                <a class="menu align-right">
                     <a href="../" class="button">Home</a>
-                </ul>
+                    <a href="/Logout" class="button">Logout</a>
+                </a>
             </div>
         </div>
-        <div class="grid-x grid-padding-x">
-            <div class="cell large-12">
-                <h2>Register</h2>
-            </div>
-            <form>
-                <div class="cell medium-6">
-                    <label>Email</label>
-                    <input type="text" placeholder="Enter Email Here" />
-                    <label>Password</label>
-                    <input type="password" placeholder="Enter Password Here" />
-                </div>
-            </form>
+        <div class="grid-x grid-padding-x grid-padding-y">
+
         </div>
     </div>
 </body>
