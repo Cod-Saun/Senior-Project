@@ -11,4 +11,5 @@ urlpatterns = [
         path('Register/', views.register),
         path('Dashboard/', views.dashboard),
         path('Logout/', views.Logout),
+        path('QuizCreation/', views.create_quiz),
 ]

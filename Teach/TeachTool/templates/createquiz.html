@@ -25,6 +25,11 @@
             </div>
         </div>
         <div class="grid-x grid-padding-x grid-padding-y">
+            <form action="/QuizCreation/" method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <input class="button" type="submit" value="Submit"/>
+            </form>
 
         </div>
     </div>

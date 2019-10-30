@@ -6,6 +6,7 @@ from django.template import RequestContext
 from django.contrib.auth import logout
 from django.utils.safestring import mark_safe
 from . import forms
+from .forms import QuizCreation
 from . import models
 import json
 
@@ -35,7 +36,15 @@ def dashboard(request):
 
 @login_required(login_url="/Login/")
 def create_quiz(request):
-    return render(request, "createquiz.html")
+    if request.method =="POST":
+        form = QuizCreation(request.POST)
+
+        if form.is_valid():
+            form.cleaned_data()
+            print("success")
+    else:
+        form = QuizCreation()
+    return render(request, "createquiz.html", {'form':form})
 
 def Logout(request):
     logout(request)

@@ -18,3 +18,10 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+class QuizCreation(forms.Form):
+    questions = []
+    quiz_title = forms.CharField(label="Quiz Title")
+    num_questions = forms.IntegerField(label="Number of questions")
+    question = forms.CharField(label="Question 1", widget=forms.Textarea)
+
