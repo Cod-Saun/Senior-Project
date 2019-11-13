@@ -51,14 +51,14 @@ def create_quiz(request):
 #use formset to get multiple answer forms to show up
 #find a way to get quiz_id as a foreign key while still submitting questions and answers at the same time
 @login_required(login_url="/Login/")
-def create_quiz(request):
+def create_question(request):
     questionform = forms.QuestionCreation(request.POST or None)
     answerform = forms.AnswerCreation(request.POST or None)
     if questionform.is_valid() and answerform.is_valid():
         questionform.cleaned_data()
-        question = questionform.save()
+        questionform.save()
         answerform.cleaned_data()
-        answer = answerform.save()
+        answerform.save()
     context = {
         'questionform': questionform,
         'answerform': answerform,
