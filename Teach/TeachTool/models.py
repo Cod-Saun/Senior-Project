@@ -15,6 +15,6 @@ class QuizQuestion(models.Model):
 
 class QuizAnswer(models.Model):
     answer_id = models.AutoField(primary_key=True)
-    #question_id = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE)
+    question_id = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE)
     answer_text = models.CharField(max_length=1000)
     is_correct = models.BooleanField()

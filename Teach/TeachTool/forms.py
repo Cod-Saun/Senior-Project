@@ -11,7 +11,7 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
+        fields = ('username', 'email', 'password1', 'password2',)
 
     def save(self, commit=True):
         user = super(RegistrationForm, self).save(commit=False)
@@ -23,7 +23,7 @@ class RegistrationForm(UserCreationForm):
 class QuizCreation(forms.ModelForm):
     class Meta:
         model = Quiz
-        fields = ("quiz_title", "num_questions", "grade_level")
+        fields = ('quiz_title', 'num_questions', 'grade_level',)
 
     quiz_title = forms.CharField(label="Quiz title")
     grade_level = forms.IntegerField(label="Grade level (0 = Kinder)", min_value=0, max_value=5)
@@ -33,12 +33,9 @@ class QuestionCreation(forms.ModelForm):
     class Meta:
         model = QuizQuestion
         fields = ('question_text',)
-    #question = forms.CharField(label="Question 1", widget=forms.Textarea)
+
+#for correct answer make a single radio button set to true if selected and false if not selected 
 class AnswerCreation(forms.ModelForm):
     class Meta:
         model = QuizAnswer
-        fields = ("answer_text", "is_correct")
-
-    Choices =   [('TRUE', 'Yes'), ('FALSE', 'No'),]
-    #answer = forms.CharField(label="A")
-    #is_correct = forms.ChoiceField(label="Is this the correct answer?", choices=Choices)
+        fields = ('answer_text', 'is_correct',)

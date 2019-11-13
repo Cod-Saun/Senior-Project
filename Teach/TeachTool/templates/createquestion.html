@@ -27,7 +27,6 @@
         <div class="grid-x grid-padding-x grid-padding-y">
             <form method="POST">
                 {% csrf_token %}
-                {{ quizform }}
                 {{ questionform }}
                 {{ answerform }}
                 <input class="button" type="submit" value="Submit"/>
