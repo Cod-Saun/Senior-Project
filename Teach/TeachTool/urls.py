@@ -5,11 +5,11 @@ from django.urls import path
 from django.contrib.auth import views as auth_views
 from . import views
 
-urlpatterns = [ 
-        path('', views.home),
-        path('Login/', auth_views.LoginView.as_view()),
-        path('Register/', views.register),
-        path('Dashboard/', views.dashboard),
-        path('Logout/', views.Logout),
-        path('QuizCreation/', views.create_quiz),
+urlpatterns = [
+    path('', views.home),
+    path('Login/', auth_views.LoginView.as_view()),
+    path('Register/', views.register),
+    path('Dashboard/', views.dashboard),
+    path('Logout/', views.Logout),
+    path('QuizCreation/', views.create_quiz),
 ]

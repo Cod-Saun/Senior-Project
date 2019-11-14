@@ -28,7 +28,9 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ quizform }}
-                <input class="button" type="submit" value="Submit"/>
+                {{ questionform }}
+                {{ answerform }}
+                <input class="button" action= "" type="submit" value="Submit" />
             </form>
 
         </div>

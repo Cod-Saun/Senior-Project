@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -35,35 +35,31 @@ def dashboard(request):
 
 #Dislplay the form to create a quiz.
 #Includes title, number of questions, and grade level
-@login_required(login_url="/Login/")
-def create_quiz(request):
-    quizform = forms.QuizCreation(request.POST or None)
-    if quizform.is_valid():
-        quizform.cleaned_data()
-        quiz = quizform.save()
-    context = {
-        'quizform': quizform,
-    }
-    return render(request, "createquiz.html", context)
-
 #Display form to create the questions of the quiz and its answers
 #question will get quiz_id as a foreign key from the post request of the quiz creation form
 #use formset to get multiple answer forms to show up
 #find a way to get quiz_id as a foreign key while still submitting questions and answers at the same time
 @login_required(login_url="/Login/")
-def create_question(request):
+def create_quiz(request):
+    #get primary key of quiz that was created
+    quizform = forms.QuizCreation(request.POST or None)
     questionform = forms.QuestionCreation(request.POST or None)
     answerform = forms.AnswerCreation(request.POST or None)
-    if questionform.is_valid() and answerform.is_valid():
-        questionform.cleaned_data()
-        questionform.save()
-        answerform.cleaned_data()
-        answerform.save()
+
+    if quizform.is_valid() and questionform.is_valid() and answerform.is_valid():
+        quiz = quizform.save()
+        question = questionform.save(commit=False)
+        question.quiz_id = quiz
+        question.save()
+        answer = answerform.save(commit=False)
+        answer.question_id = question
+        answer.save()
     context = {
+        'quizform': quizform,
         'questionform': questionform,
         'answerform': answerform,
     }
-    return render(request, "createquestion.html", context)
+    return render(request, "createquiz.html", context)
 
 def Logout(request):
     logout(request)
