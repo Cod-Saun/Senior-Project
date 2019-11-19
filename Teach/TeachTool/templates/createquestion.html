@@ -28,8 +28,8 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ questionform }}
-                {{ answerform }}
-                <input class="button" type="submit" value="Submit" />
+                {{ questionformset.management_form}}
+                <input class="button" action="" type="submit" value="Submit"/>
             </form>
 
         </div>

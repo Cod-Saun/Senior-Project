@@ -1,4 +1,5 @@
 from django import forms
+from . import models
 from .models import Quiz, QuizQuestion, QuizAnswer
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
