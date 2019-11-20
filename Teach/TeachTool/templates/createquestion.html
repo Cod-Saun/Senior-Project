@@ -28,8 +28,12 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ questionform }}
-                {{ questionformset.management_form}}
-                <input class="button" action="" type="submit" value="Submit"/>
+                {{ formset }}
+                {% if numquestions > 1 %}
+                  <input class="button" type="submit" value="Add Question"/>
+                {% else %}
+                  <input class="button" type="submit" value="Done"/>
+                {% endif %}
             </form>
 
         </div>

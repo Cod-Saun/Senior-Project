@@ -18,3 +18,10 @@ class QuizAnswer(models.Model):
     question_id = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE, default=1)
     answer_text = models.CharField(max_length=1000)
     is_correct = models.BooleanField()
+
+class QuizResults(models.Model):
+    result_id = models.AutoField(primary_key=True)
+    quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=1)
+    user = models.CharField(max_length=200)
+    #figure out type for score
+    #score = models.

@@ -34,9 +34,3 @@ class QuestionCreation(forms.ModelForm):
     class Meta:
         model = QuizQuestion
         fields = ('question_text',)
-
-#for correct answer make a single radio button set to true if selected and false if not selected 
-class AnswerCreation(forms.ModelForm):
-    class Meta:
-        model = QuizAnswer
-        fields = ('answer_text', 'is_correct',)
