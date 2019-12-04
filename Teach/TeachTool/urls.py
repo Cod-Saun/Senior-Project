@@ -13,4 +13,7 @@ urlpatterns = [
     path('Logout/', views.Logout),
     path('QuizCreation/', views.create_quiz),
     path('QuizCreation/QuestionCreation', views.create_question),
+    path('Quiz/<quizid>/', views.quizintro),
+    path('Quiz/<quizid>/<questionid>/', views.quiz),
+    path('StudentCreation/', views.create_student)
 ]

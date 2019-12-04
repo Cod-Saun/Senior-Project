@@ -1,6 +1,6 @@
 from django import forms
 from . import models
-from .models import Quiz, QuizQuestion, QuizAnswer
+from .models import Quiz, QuizQuestion, QuizAnswer, Student
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
@@ -24,7 +24,7 @@ class RegistrationForm(UserCreationForm):
 class QuizCreation(forms.ModelForm):
     class Meta:
         model = Quiz
-        fields = ('quiz_title', 'num_questions', 'grade_level',)
+        fields = ('quiz_title', 'num_questions', 'grade_level', 'subject', 'summary',)
 
     quiz_title = forms.CharField(label="Quiz title")
     grade_level = forms.IntegerField(label="Grade level (0 = Kinder)", min_value=0, max_value=5)
@@ -34,3 +34,12 @@ class QuestionCreation(forms.ModelForm):
     class Meta:
         model = QuizQuestion
         fields = ('question_text',)
+
+class StudentCreation(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ('first_name', 'last_name', 'grade_level',)
+
+    first_name = forms.CharField(label="First Name")
+    last_name = forms.CharField(label="Last Name")
+    grade_level = forms.IntegerField(label="Grade level (0 = Kinder)", min_value=0, max_value=5)

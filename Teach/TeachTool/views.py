@@ -1,6 +1,6 @@
 from . import forms
 from . import models
-from .models import Quiz, QuizQuestion, QuizAnswer
+from .models import Quiz, QuizQuestion, QuizAnswer, Student
 from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -31,7 +31,52 @@ def register(request):
 
 @login_required(login_url="/Login/")
 def dashboard(request):
-    return render(request, "dashboard.html")
+    quizzes = Quiz.objects.all()
+    students = Student.objects.all()
+    context = {
+        'students':students,
+        'quizzes':quizzes,
+    }
+    return render(request, "dashboard.html", context)
+
+@login_required(login_url="/Login/")
+def quizintro(request, quizid):
+    quiz = Quiz.objects.get(quiz_id=quizid)
+    questions = QuizQuestion.objects.filter(quiz_id=quiz)
+    question = questions[0]
+    context = { 
+        'quiz':quiz,
+        'question':question,
+    }
+    return render(request, "quizintro.html", context)
+
+#figure out how to return to dashboard after getting to last element of queryset
+def quiz(request, quizid, questionid):
+    quiz = Quiz.objects.get(quiz_id=quizid)
+    question = QuizQuestion.objects.get(question_id=questionid)
+    questions = QuizQuestion.objects.filter(quiz_id=quiz)
+    answers = QuizAnswer.objects.filter(question_id=questionid)
+    nextquestion = str(int(questionid) + 1)
+    lastquestion = False
+
+    if request.method == 'POST':
+        if int(questionid) == questions.last().question_id:
+            return redirect('/Dashboard')
+        else:
+            lastquestion = False
+            return redirect('/Quiz' + '/' + quizid + '/' + nextquestion + '/')
+
+    if int(questionid) == questions.last().question_id:
+        lastquestion = True
+
+    context = {
+        'quizid':quizid,
+        'question':question,
+        'nextquestion':nextquestion,
+        'lastquestion':lastquestion,
+        'answers':answers,
+    }
+    return render(request, "quiz.html", context)
 
 @login_required(login_url="/Login/")
 def create_quiz(request):
@@ -91,6 +136,27 @@ def create_question(request):
             'numquestions':numquestions
         }
         return render(request, "createquestion.html", context)
+
+#@login_required(login_url="/Login/")
+#def quiz_intro(request):
+    #return render(request, "selectquiz.html", context)
+
+#@login_required(login_url="/Login/")
+#def take_quiz(request):
+    #return render(request, "selectquiz.html", context)
+
+@login_required(login_url="/Login/")
+def create_student(request):
+    studentform = forms.StudentCreation(request.POST or None)
+    if request.method == 'POST':
+        if studentform.is_valid():
+            student = studentform.save()
+            return redirect('/Dashboard')
+    else:
+        context = {
+            'studentform': studentform,
+        }
+        return render(request, "createstudent.html", context)
 
 def Logout(request):
     logout(request)

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>Welcome!</title>
-    <link rel="stylesheet" href="../static/Foundation/css/foundation.css">
+    <link rel="stylesheet" href="/static/Foundation/css/foundation.css">
 </head>
 
 <body>
@@ -15,11 +15,11 @@
                 <img src="https://i.imgur.com/ZCEyPtc.png" style="width:75px;height:75px;">
             </div>
             <div class="cell small-4">
-                <h2>Classroom Helper</h2>
+                <h2>Teacher's Pet</h2>
             </div>
             <div class="cell small-4">
                 <a class="menu align-right">
-                    <a href="../" class="button">Home</a>
+                    <a href="/" class="button">Home</a>
                     <a href="/Logout" class="button">Logout</a>
                 </a>
             </div>
@@ -28,18 +28,22 @@
             <div class="cell large-6">
                 <div class="callout">
                     <h3>My Students</h3>
-                    <li><a href="#">Student 1</a></li>
-                    <li><a href="#">Student 2</a></li>
-                    <li><a href="#">Student 3</a></li>
-                    <p><a class="button">New Student</a></p>
+                    {% for student in students %}
+                      <ul>
+                          <li>{{ student.first_name }} {{ student.last_name }}</li>
+                      </ul>
+                    {% endfor %}
+                    <p><a href="/StudentCreation/" class="button">New Student</a></p>
                 </div>
             </div>
             <div class="cell large-6">
                 <div class="callout">
                     <h3>My Quizzes</h3>
-                    <li><a href="#">Quiz 1</a></li>
-                    <li><a href="#">Quiz 2</a></li>
-                    <li><a href="#">Quiz 3</a></li>
+                    {% for quiz in quizzes %}
+                      <ul>
+                      <li><a href="/Quiz/{{ quiz.quiz_id }}/">{{ quiz.quiz_title}}</a></li>
+                      </ul>
+                    {% endfor %}
                     <p><a href="/QuizCreation/" class="button">Create Quiz</a></p>
                 </div>
             </div>
