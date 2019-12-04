@@ -43,3 +43,9 @@ class StudentCreation(forms.ModelForm):
     first_name = forms.CharField(label="First Name")
     last_name = forms.CharField(label="Last Name")
     grade_level = forms.IntegerField(label="Grade level (0 = Kinder)", min_value=0, max_value=5)
+
+class SelectAnswer(forms.ModelForm):
+    class Meta:
+        model = QuizAnswer
+        fields = ("answer_text",)
+        answer_text = forms.ModelMultipleChoiceField(queryset=QuizAnswer.objects.all())

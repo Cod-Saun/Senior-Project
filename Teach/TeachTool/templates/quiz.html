@@ -35,6 +35,7 @@
             </ul>
             <form method="POST" align="center">
                 {% csrf_token %}
+                {{ answerform }}
                 {% if lastquestion %}
                   <input class="button" type="submit" value="Done"/>
                 {% else %}

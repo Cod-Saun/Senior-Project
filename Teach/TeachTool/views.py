@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth import logout
 from django.utils.safestring import mark_safe
-from django.forms import inlineformset_factory
+from django.forms import inlineformset_factory, ModelChoiceField
 
 # Create your views here.
 def home(request):
@@ -52,6 +52,7 @@ def quizintro(request, quizid):
 
 #figure out how to return to dashboard after getting to last element of queryset
 def quiz(request, quizid, questionid):
+    answerform = forms.SelectAnswer(request.POST or None)
     quiz = Quiz.objects.get(quiz_id=quizid)
     question = QuizQuestion.objects.get(question_id=questionid)
     questions = QuizQuestion.objects.filter(quiz_id=quiz)
@@ -75,6 +76,7 @@ def quiz(request, quizid, questionid):
         'nextquestion':nextquestion,
         'lastquestion':lastquestion,
         'answers':answers,
+        'answerform':answerform,
     }
     return render(request, "quiz.html", context)
 
@@ -137,13 +139,6 @@ def create_question(request):
         }
         return render(request, "createquestion.html", context)
 
-#@login_required(login_url="/Login/")
-#def quiz_intro(request):
-    #return render(request, "selectquiz.html", context)
-
-#@login_required(login_url="/Login/")
-#def take_quiz(request):
-    #return render(request, "selectquiz.html", context)
 
 @login_required(login_url="/Login/")
 def create_student(request):
