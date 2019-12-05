@@ -30,7 +30,7 @@
                     <h3>My Students</h3>
                     {% for student in students %}
                       <ul>
-                          <li>{{ student.first_name }} {{ student.last_name }}</li>
+                          <li><a href="/Student/{{ student.student_id }}">{{ student.first_name }} {{ student.last_name }}</a></li>
                       </ul>
                     {% endfor %}
                     <p><a href="/StudentCreation/" class="button">New Student</a></p>

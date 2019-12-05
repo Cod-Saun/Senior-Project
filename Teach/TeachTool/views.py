@@ -57,6 +57,7 @@ def quiz(request, quizid, questionid):
     question = QuizQuestion.objects.get(question_id=questionid)
     questions = QuizQuestion.objects.filter(quiz_id=quiz)
     answers = QuizAnswer.objects.filter(question_id=questionid)
+    answerform.fields['answer_text'].queryset = answers.values_list('answer_text', flat=True)
     nextquestion = str(int(questionid) + 1)
     lastquestion = False
 
@@ -79,6 +80,13 @@ def quiz(request, quizid, questionid):
         'answerform':answerform,
     }
     return render(request, "quiz.html", context)
+
+def student(request, studentid):
+    student = Student.objects.get(student_id=studentid)
+    context = {
+        'student':student,
+    }
+    return render(request, "student.html", context)
 
 @login_required(login_url="/Login/")
 def create_quiz(request):

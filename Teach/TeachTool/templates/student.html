@@ -27,16 +27,10 @@
     </div>
     <div class="grid-x grid-padding-x grid-padding-y">
         <div class="cell large-12">
-            <h3 align="center">{{ question.question_text }}</h3>
-            <form method="POST" align="center">
-                {% csrf_token %}
-                {{ answerform }}
-                {% if lastquestion %}
-                  <input class="button" type="submit" value="Done"/>
-                {% else %}
-                  <input class="button" type="submit" value="Next Question"/>
-                {% endif %}
-            </form>
+            <h3 align="center">{{ student.first_name }} {{ student.last_name }}</h3>
+            <p align="center">
+                Grade Level: {{ student.grade_level }}
+            </p>
         </div>
     </div>
 </body>

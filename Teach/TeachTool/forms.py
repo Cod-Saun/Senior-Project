@@ -48,4 +48,5 @@ class SelectAnswer(forms.ModelForm):
     class Meta:
         model = QuizAnswer
         fields = ("answer_text",)
-        answer_text = forms.ModelMultipleChoiceField(queryset=QuizAnswer.objects.all())
+    
+    answer_text = forms.ModelChoiceField(queryset=QuizAnswer.objects.all(), widget=forms.RadioSelect(), empty_label=None, required=True, label='')
