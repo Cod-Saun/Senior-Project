@@ -41,12 +41,21 @@ def dashboard(request):
 
 @login_required(login_url="/Login/")
 def quizintro(request, quizid):
+    studentform = forms.SelectStudent(request.POST or None)
     quiz = Quiz.objects.get(quiz_id=quizid)
     questions = QuizQuestion.objects.filter(quiz_id=quiz)
     question = questions[0]
+    if request.method == "POST":
+        if studentform.is_valid():
+            student = studentform.cleaned_data['students']
+            studentid = student.student_id
+            request.session['studentid'] = studentid
+            return redirect('/Quiz/' + str(quiz.quiz_id) + '/' + str(question.question_id) +'/')
+        
     context = { 
         'quiz':quiz,
         'question':question,
+        'studentform':studentform,
     }
     return render(request, "quizintro.html", context)
 
@@ -66,7 +75,7 @@ def quiz(request, quizid, questionid):
             return redirect('/Dashboard')
         else:
             lastquestion = False
-            return redirect('/Quiz' + '/' + quizid + '/' + nextquestion + '/')
+            return redirect('/Quiz/' + quizid + '/' + nextquestion + '/')
 
     if int(questionid) == questions.last().question_id:
         lastquestion = True

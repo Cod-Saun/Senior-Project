@@ -30,11 +30,6 @@
 
         <div class="grid-x grid-padding-x grid-padding-y">
             <div class="cell large-6">
-                <select>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Student">Student</option>
-                </select>
-
                 <form action="/Login/" method="POST">
                     {% csrf_token %}
                     {{ form.errors }}

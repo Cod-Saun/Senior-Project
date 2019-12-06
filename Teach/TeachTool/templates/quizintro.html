@@ -25,16 +25,22 @@
             </div>
         </div>
     </div>
-    <div class="grid-x grid-padding-x grid-padding-y">
-        <div class="cell large-12">
+    <div class="grid-x grid-padding-x grid-padding-y" align="center">
+        <div class="cell large-12" align="center">
             <h3 align="center">{{ quiz.quiz_title }}</h3>
             <p align="center">
                 {{ quiz.summary }}
             </p>
-            <p align="center">
-                <a href="/Quiz/{{ quiz.quiz_id }}/{{ question.question_id }}/" class="button" align="center">Go!</a>
-            </p>
-        </div>
+            <div class="grid-x grid-padding-x grid-padding-y" align="center">
+                <div class="cell large-4" align="center">
+                    <form method="POST" align="center">
+                        {% csrf_token %}
+                        {{ studentform }}
+                        <input class="button" type="submit" value="Go!"/>
+                    </form>
+                </div>    
+            </div>
+       </div>
     </div>
 </body>
 

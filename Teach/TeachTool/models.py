@@ -27,9 +27,13 @@ class Student(models.Model):
     last_name = models.CharField(max_length=50)
     grade_level = models.IntegerField()
 
-#class QuizResults(models.Model):
-    #result_id = models.AutoField(primary_key=True)
+#class StudentAnswer(models.Model):
     #quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=1)
-    #user = models.CharField(max_length=200)
-    #figure out type for score
-    #score = models.
+    #student_id = models.ForeignKey(Student, on_delete=models.CASCADE, default=1)
+    #answer_id = models.ForeignKey(QuizAnswer, on_delete=models.CASCADE)
+
+class QuizResults(models.Model):
+    result_id = models.AutoField(primary_key=True)
+    quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=1)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE, default=1)
+    score = models.IntegerField()
