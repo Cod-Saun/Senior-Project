@@ -16,6 +16,8 @@ class QuizQuestion(models.Model):
     question_text = models.CharField(max_length=1000)
 
 class QuizAnswer(models.Model):
+    def __str__(self):
+        return '%s' % (self.answer_text)
     answer_id = models.AutoField(primary_key=True)
     question_id = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE, default=1)
     answer_text = models.CharField(max_length=1000)

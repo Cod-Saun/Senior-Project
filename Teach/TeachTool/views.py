@@ -59,18 +59,19 @@ def quizintro(request, quizid):
     }
     return render(request, "quizintro.html", context)
 
-#figure out how to return to dashboard after getting to last element of queryset
 def quiz(request, quizid, questionid):
-    answerform = forms.SelectAnswer(request.POST or None)
     quiz = Quiz.objects.get(quiz_id=quizid)
     question = QuizQuestion.objects.get(question_id=questionid)
     questions = QuizQuestion.objects.filter(quiz_id=quiz)
     answers = QuizAnswer.objects.filter(question_id=questionid)
-    answerform.fields['answer_text'].queryset = answers.values_list('answer_text', flat=True)
+    answerform = forms.SelectAnswer(request.POST or None, answers=answers)
     nextquestion = str(int(questionid) + 1)
     lastquestion = False
 
     if request.method == 'POST':
+        if answerform.is_valid():
+            selectedanswer = answerform
+            print(selectedanswer)
         if int(questionid) == questions.last().question_id:
             return redirect('/Dashboard')
         else:

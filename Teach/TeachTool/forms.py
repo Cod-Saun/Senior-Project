@@ -46,10 +46,10 @@ class StudentCreation(forms.ModelForm):
     grade_level = forms.IntegerField(label="Grade level (0 = Kinder)", min_value=0, max_value=5)
 
 class SelectAnswer(forms.Form):
-    class Meta:
-        model = QuizAnswer
-        fields = ("answer_text",)
-    
+    def __init__(self, *args, **kwargs):
+        answers = kwargs.pop('answers', None)
+        super().__init__(*args, **kwargs)
+        self.fields['answer_text'].queryset = answers
     answer_text = forms.ModelChoiceField(queryset=QuizAnswer.objects.all(), widget=forms.RadioSelect(), empty_label=None, required=True, label='')
 
 class StudentNames(ModelChoiceField):
