@@ -1,6 +1,6 @@
 from . import forms
 from . import models
-from .models import Quiz, QuizQuestion, QuizAnswer, Student
+from .models import *
 from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -49,6 +49,13 @@ def quizintro(request, quizid):
         if studentform.is_valid():
             student = studentform.cleaned_data['students']
             studentid = student.student_id
+            results = QuizResult.objects.filter(quiz_id=quiz, student_id=student).order_by('-attempt')
+            if results.count() > 0 and results[0].attempt >= 1:
+                result = QuizResult(quiz_id=quiz, student_id=student, score=0, attempt=results[0].attempt + 1)
+                result.save()
+            else:
+                result = QuizResult(quiz_id=quiz, student_id=student, score=0, attempt=1)
+                result.save()
             request.session['studentid'] = studentid
             return redirect('/Quiz/' + str(quiz.quiz_id) + '/' + str(question.question_id) +'/')
         
@@ -64,14 +71,24 @@ def quiz(request, quizid, questionid):
     question = QuizQuestion.objects.get(question_id=questionid)
     questions = QuizQuestion.objects.filter(quiz_id=quiz)
     answers = QuizAnswer.objects.filter(question_id=questionid)
+    correct_answer = answers.get(is_correct=True)
     answerform = forms.SelectAnswer(request.POST or None, answers=answers)
+    studentid = request.session.get('studentid')
+    student = Student.objects.get(student_id=studentid)
     nextquestion = str(int(questionid) + 1)
     lastquestion = False
 
     if request.method == 'POST':
         if answerform.is_valid():
-            selectedanswer = answerform
-            print(selectedanswer)
+            selectedanswer = answerform.cleaned_data['answer_text']
+            selectedanswerid = answers.filter(answer_text=selectedanswer)
+            studentanswer = StudentAnswer(question=question, student_id=student, correct_answer=correct_answer, student_answer=selectedanswerid[0])
+            studentanswer.save()
+            if str(studentanswer.student_answer) == correct_answer.answer_text:
+                result = QuizResult.objects.filter(student_id=student, quiz_id=quiz).order_by('-attempt')
+                result = result[0]
+                result.score = result.score + 1
+                result.save()
         if int(questionid) == questions.last().question_id:
             return redirect('/Dashboard')
         else:
@@ -156,7 +173,6 @@ def create_question(request):
             'numquestions':numquestions
         }
         return render(request, "createquestion.html", context)
-
 
 @login_required(login_url="/Login/")
 def create_student(request):

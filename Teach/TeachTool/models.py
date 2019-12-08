@@ -29,13 +29,16 @@ class Student(models.Model):
     last_name = models.CharField(max_length=50)
     grade_level = models.IntegerField()
 
-#class StudentAnswer(models.Model):
-    #quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=1)
-    #student_id = models.ForeignKey(Student, on_delete=models.CASCADE, default=1)
-    #answer_id = models.ForeignKey(QuizAnswer, on_delete=models.CASCADE)
+class StudentAnswer(models.Model):
+    student_answer_id = models.AutoField(primary_key=True)
+    question = models.ForeignKey(QuizQuestion, on_delete=models.CASCADE, default=1)
+    student_id = models.ForeignKey(Student, on_delete=models.CASCADE, default=1)
+    correct_answer = models.ForeignKey(QuizAnswer, on_delete=models.CASCADE)
+    student_answer = models.CharField(max_length=1000)
 
-class QuizResults(models.Model):
+class QuizResult(models.Model):
     result_id = models.AutoField(primary_key=True)
     quiz_id = models.ForeignKey(Quiz, on_delete=models.CASCADE, default=1)
     student_id = models.ForeignKey(Student, on_delete=models.CASCADE, default=1)
     score = models.IntegerField()
+    attempt = models.IntegerField()
