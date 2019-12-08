@@ -25,24 +25,15 @@
             </div>
         </div>
     </div>
-    <div class="grid-x grid-padding-x grid-padding-y">
-        <div class="cell large-12">
-            <h3 align="center">{{ student.first_name }} {{ student.last_name }}</h3>
+    <div class="grid-x grid-padding-x grid-padding-y" align="center">
+        <div class="cell large-12" align="center">
+            <h3 align="center">{{ quizname }}</h3>
             <p align="center">
-                Grade Level: {{ student.grade_level }}
+                {{ studentname }}, you scored {{ score }}%.
             </p>
-            <div class="grid-x grid-padding-x">
-                <div class="large-12 cell">
-                    <div class="callout">
-                        {% for result in results %}
-                          <ul align="center">
-                              <li align="center">{{result.quiz_id.quiz_title }} (attempt {{ result.attempt }}) - {{ result.score }} Out of {{ result.quiz_id.num_questions }}</li>
-                          </ul>
-                        {% endfor %}
-                    </div>
-               </div>
-           </div>
-        </div>
+            <a href="/Dashboard" class="button" align="center">OK</a>
+            </div>
+       </div>
     </div>
 </body>
 

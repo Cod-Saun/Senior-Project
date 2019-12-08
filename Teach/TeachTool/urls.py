@@ -15,6 +15,7 @@ urlpatterns = [
     path('QuizCreation/QuestionCreation', views.create_question),
     path('Quiz/<quizid>/', views.quizintro),
     path('Quiz/<quizid>/<questionid>/', views.quiz),
+    path('Results/<quizid>/<studentid>/<resultid>/', views.quizresults),
     path('Student/<studentid>/', views.student),
     path('StudentCreation/', views.create_student)
 ]

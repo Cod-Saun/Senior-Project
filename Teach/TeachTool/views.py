@@ -89,8 +89,12 @@ def quiz(request, quizid, questionid):
                 result = result[0]
                 result.score = result.score + 1
                 result.save()
+            else:
+                result = QuizResult.objects.filter(student_id=student, quiz_id=quiz).order_by('-attempt')
+                result = result[0]
+
         if int(questionid) == questions.last().question_id:
-            return redirect('/Dashboard')
+            return redirect('/Results/' + quizid + '/' + str(studentid) + '/' + str(result.result_id) + '/')
         else:
             lastquestion = False
             return redirect('/Quiz/' + quizid + '/' + nextquestion + '/')
@@ -108,10 +112,26 @@ def quiz(request, quizid, questionid):
     }
     return render(request, "quiz.html", context)
 
+def quizresults(request, studentid, quizid, resultid):
+    result = QuizResult.objects.get(result_id=resultid)
+    quiz = Quiz.objects.get(quiz_id=quizid)
+    quizname = quiz.quiz_title
+    student = Student.objects.get(student_id=studentid)
+    studentname = student.first_name + ' ' + student.last_name
+    score = (result.score / quiz.num_questions) * 100
+    context = {
+        'quizname':quizname,
+        'studentname':studentname,
+        'score':score,
+    }
+    return render(request, "quizresults.html", context)
+
 def student(request, studentid):
     student = Student.objects.get(student_id=studentid)
+    results = QuizResult.objects.filter(student_id=studentid)
     context = {
         'student':student,
+        'results':results,
     }
     return render(request, "student.html", context)
 
